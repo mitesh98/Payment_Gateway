@@ -15,11 +15,23 @@
 	  text-decoration: none;
 	  display: inline-block;
 	  font-size: 16px;
-}
+	 position: absolute;
+	 right:28%;
+	}
+	.container {
+  		width: 500px;
+  		clear: both;
+	}
+
+	.container input {
+  		width: 100%;
+  	clear: both;
+	}
     </style>
 </head>
 <body>
 	<h1>Paysafe</h1>
+	<div class="container">
 	<form>
 		<label for="email">Email</label>
         <input required type="email"  value="" id="email"><br>
@@ -29,8 +41,9 @@
          <input required type="text" value="" id="lastName"><br>
            <label for="inputAmount">Amount</label>
             <input required type="number"  value="" id="inputAmount"><br>
-            <button type="submit">CheckOut</button>
+            <button type="submit">Pay(in $)</button>
             </form>
+       </div>
 <script>
     $(document).ready(function () {
         $("button").click(function (event) {
@@ -86,9 +99,9 @@
 
     function checkout(token, billingAddress, customer, amount, uuid) {
 
-        console.log( "In Checkout function" );
-        console.log( token );
-        console.log( uuid );
+        console.log( "Inside Checkout function" );
+        console.log("Toen:"+ token );
+        console.log("User ID"+ uuid );
         paysafe.checkout.setup("cHVibGljLTc3NTE6Qi1xYTItMC01ZjAzMWNiZS0wLTMwMmQwMjE1MDA4OTBlZjI2MjI5NjU2M2FjY2QxY2I0YWFiNzkwMzIzZDJmZDU3MGQzMDIxNDUxMGJjZGFjZGFhNGYwM2Y1OTQ3N2VlZjEzZjJhZjVhZDEzZTMwNDQ=", {
             "currency": "USD",
             "amount": parseInt(amount) * 100,
@@ -110,12 +123,11 @@
             }
         }, function (instance, error, result) {
 
-            console.log( "in call back function" );
+            console.log( "inside call back function" );
             if (result && result.paymentHandleToken) {
 
-                console.log( result.paymentHandleToken );
-                console.log("result of checkout")
-                console.log(result);
+                console.log("Payment Handle Token", result.paymentHandleToken );
+                console.log("result of checkout",result)
                 requestBody = {
                     "merchantRefNum": uuid,
                     "paymentHandleToken": result.paymentHandleToken,
@@ -125,8 +137,7 @@
                     "dupCheck": true,
                     "description": "Casino subscription"
                 }
-                console.log("request body for payment process")
-                console.log(requestBody)
+                console.log("request body for payment process"+requestBody)
                 $.ajax({
                     type: "POST",
                     url: baseUrl+"/MakePayment/" + customer.email,
