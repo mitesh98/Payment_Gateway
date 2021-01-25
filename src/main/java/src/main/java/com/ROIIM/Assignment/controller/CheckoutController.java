@@ -9,7 +9,7 @@ import src.main.java.com.ROIIM.Assignment.service.CheckoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
+@CrossOrigin
 @RestController
 public class CheckoutController {
 
